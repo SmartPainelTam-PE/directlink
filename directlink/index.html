@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartPainel DirectLink - Todos os seus links em um só lugar</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mini.css@3.0.1/dist/mini-default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --dark-color: #212529;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        
+        .col-4 {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+            padding: 0 15px;
+        }
+        
+        .col-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding: 0 15px;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .mb-5 {
+            margin-bottom: 3rem;
+        }
+        
+        .py-5 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+        
+        .bg-light {
+            background-color: #f8f9fa;
+        }
+        
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            color: #fff;
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-light {
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            border-color: var(--light-color);
+        }
+        
+        .btn-outline-light {
+            color: white;
+            border-color: white;
+            background-color: transparent;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .template-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .template-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .template-preview {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .template-info {
+            padding: 20px;
+        }
+        
+        .template-blue {
+            --template-primary: #4361ee;
+            --template-secondary: #3a0ca3;
+            --template-accent: #4cc9f0;
+        }
+        
+        .template-green {
+            --template-primary: #2a9d8f;
+            --template-secondary: #264653;
+            --template-accent: #e9c46a;
+        }
+        
+        .template-purple {
+            --template-primary: #7209b7;
+            --template-secondary: #3f37c9;
+            --template-accent: #f72585;
+        }
+        
+        .template-orange {
+            --template-primary: #fb8500;
+            --template-secondary: #023047;
+            --template-accent: #ffb703;
+        }
+        
+        .color-swatch {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .col-4, .col-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            
+            .hero-section {
+                padding: 50px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header>
+        <nav class="sticky">
+            <div class="container">
+                <a href="#" class="logo">
+                    <strong><span style="color: var(--primary-color);">SmartPainel</span> DirectLink</strong>
+                </a>
+                <input type="checkbox" id="nav-toggle" class="nav-toggle">
+                <label for="nav-toggle" class="nav-toggle-label">Menu</label>
+                <ul class="nav">
+                    <li><a href="#recursos">Recursos</a></li>
+                    <li><a href="#como-funciona">Como Funciona</a></li>
+                    <li><a href="#galeria">Galeria</a></li>
+                    <li><a href="#templates">Templates</a></li>
+                    <li><a href="#depoimentos">Depoimentos</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <h1>Todos os seus links em um só lugar</h1>
+            <p class="mb-4">O SmartPainel DirectLink é a ferramenta que reúne todos os links dos participantes do painel interativo em um só lugar, com design padronizado e profissional.</p>
+            <a href="#templates" class="btn btn-light">Ver Templates</a>
+            <a href="#como-funciona" class="btn btn-outline-light">Saiba Mais</a>
+            <div style="margin-top: 40px;">
+                <img src="https://placehold.co/800x400/4361ee/ffffff?text=SmartPainel+DirectLink" alt="SmartPainel Platform" style="max-width: 100%; border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5" id="recursos">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>Por que escolher o SmartPainel DirectLink?</h2>
+                <p>Recursos exclusivos que destacam seu negócio</p>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h3>Todos os Links</h3>
+                        <p>Reúna todos os seus links importantes em um único lugar, facilitando o acesso dos seus clientes às suas plataformas.</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3>Galeria de Produtos</h3>
+                        <p>Exiba seus principais produtos, localidades ou imagens que representem seu negócio em uma galeria profissional.</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3>Design Padronizado</h3>
+                        <p>Design profissional e padronizado que transmite credibilidade e confiança para seus visitantes.</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Responsivo</h3>
+                        <p>Acesse de qualquer dispositivo - desktop, tablet ou smartphone - com visualização perfeita em todas as telas.</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Análise de Cliques</h3>
+                        <p>Acompanhe o desempenho dos seus links e saiba quais geram mais interesse dos visitantes.</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="feature-card text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>Personalização</h3>
+                        <p>Adapte as cores e estilos dentro do padrão profissional para combinar com sua identidade visual.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="bg-light py-5" id="como-funciona">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>Como o SmartPainel DirectLink funciona</h2>
+                <p>Três passos simples para centralizar sua presença online</p>
+            </div>
+            <div class="row">
+                <div class="col-4 text-center">
+                    <div class="feature-card">
+                        <div style="width: 80px; height: 80px; background-color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fas fa-user-plus" style="color: white; font-size: 30px;"></i>
+                        </div>
+                        <h3>1. Escolha seu template</h3>
+                        <p>Selecione entre diversos modelos de design padronizados que melhor representem seu negócio.</p>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <div class="feature-card">
+                        <div style="width: 80px; height: 80px; background-color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fas fa-plus-circle" style="color: white; font-size: 30px;"></i>
+                        </div>
+                        <h3>2. Adicione seus links e fotos</h3>
+                        <p>Insira todos os seus links importantes e carregue imagens para sua galeria personalizada.</p>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <div class="feature-card">
+                        <div style="width: 80px; height: 80px; background-color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i class="fas fa-share-alt" style="color: white; font-size: 30px;"></i>
+                        </div>
+                        <h3>3. Compartilhe</h3>
+                        <p>Divulgue seu SmartPainel DirectLink e aumente sua visibilidade online com uma única URL.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Example -->
+    <section class="py-5" id="galeria">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>Galeria Personalizada</h2>
+                <p>Exiba seus produtos, localidades ou qualquer imagem relevante para seu negócio</p>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="feature-card">
+                        <img src="https://placehold.co/600x400/4361ee/ffffff?text=Produto+1" alt="Produto 1" style="width: 100%; margin-bottom: 15px;">
+                        <h3>Produto Destaque</h3>
+                        <p>Apresente seu produto principal com descrição e link direto para compra.</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="feature-card">
+                        <img src="https://placehold.co/600x400/4361ee/ffffff?text=Localidade" alt="Localidade" style="width: 100%; margin-bottom: 15px;">
+                        <h3>Sua Localização</h3>
+                        <p>Mostre onde seu negócio está localizado com imagens do local e mapa interativo.</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="feature-card">
+                        <img src="https://placehold.co/600x400/4361ee/ffffff?text=Serviço" alt="Serviço" style="width: 100%; margin-bottom: 15px;">
+                        <h3>Serviços Oferecidos</h3>
+                        <p>Destaque seus principais serviços com imagens e descrições detalhadas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Templates Section -->
+    <section class="bg-light py-5" id="templates">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>Templates Disponíveis</h2>
+                <p>Escolha entre diversos temas de cores para personalizar seu SmartPainel DirectLink</p>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="template-card template-blue">
+                        <div class="template-preview">
+                            <img src="https://placehold.co/800x600/4361ee/ffffff?text=Template+Azul" alt="Template Azul" style="width: 100%;">
+                        </div>
+                        <div class="template-info">
+                            <h3>Tema Azul Profissional</h3>
+                            <p>Design moderno com tons de azul, ideal para negócios corporativos e profissionais liberais.</p>
+                            <div>
+                                <span class="color-swatch" style="background-color: #4361ee;"></span>
+                                <span class="color-swatch" style="background-color: #3a0ca3;"></span>
+                                <span class="color-swatch" style="background-color: #4cc9f0;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="template-card template-green">
+                        <div class="template-preview">
+                            <img src="https://placehold.co/800x600/2a9d8f/ffffff?text=Template+Verde" alt="Template Verde" style="width: 100%;">
+                        </div>
+                        <div class="template-info">
+                            <h3>Tema Verde Natureza</h3>
+                            <p>Combinação de cores verdes e terrosas, perfeito para negócios sustentáveis e relacionados à natureza.</p>
+                            <div>
+                                <span class="color-swatch" style="background-color: #2a9d8f;"></span>
+                                <span class="color-swatch" style="background-color: #264653;"></span>
+                                <span class="color-swatch" style="background-color: #e9c46a;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="template-card template-purple">
+                        <div class="template-preview">
+                            <img src="https://placehold.co/800x600/7209b7/ffffff?text=Template+Roxo" alt="Template Roxo" style="width: 100%;">
+                        </div>
+                        <div class="template-info">
+                            <h3>Tema Roxo Criativo</h3>
+                            <p>Tons de roxo e rosa para negócios criativos, agências de design e profissionais da área artística.</p>
+                            <div>
+                                <span class="color-swatch" style="background-color: #7209b7;"></span>
+                                <span class="color-swatch" style="background-color: #3f37c9;"></span>
+                                <span class="color-swatch" style="background-color: #f72585;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="template-card template-orange">
+                        <div class="template-preview">
+                            <img src="https://placehold.co/800x600/fb8500/ffffff?text=Template+Laranja" alt="Template Laranja" style="width: 100%;">
+                        </div>
+                        <div class="template-info">
+                            <h3>Tema Laranja Energético</h3>
+                            <p>Combinação vibrante de laranja e amarelo, ideal para negócios relacionados a alimentação, esporte e entretenimento.</p>
+                            <div>
+                                <span class="color-swatch" style="background-color: #fb8500;"></span>
+                                <span class="color-swatch" style="background-color: #023047;"></span>
+                                <span class="color-swatch" style="background-color: #ffb703;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-5" id="depoimentos">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2>O que nossos participantes dizem</h2>
+                <p>Experiências reais com o SmartPainel DirectLink</p>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="feature-card">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <img src="https://placehold.co/60x60/4361ee/ffffff?text=MC" style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px;" alt="User">
+                            <div>
+                                <h3 style="margin: 0;">Mariana Costa</h3>
+                                <p style="margin: 0;">Loja de Artesanato</p>
+                            </div>
+                        </div>
+                        <p>"O SmartPainel DirectLink transformou minha presença online. Agora posso mostrar meus produtos e direcionar clientes para minhas redes sociais e loja virtual em um só lugar!"</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="feature-card">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <img src="https://placehold.co/60x60/4361ee/ffffff?text=RA" style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px;" alt="User">
+                            <div>
+                                <h3 style="margin: 0;">Ricardo Almeida</h3>
+                                <p style="margin: 0;">Restaurante Local</p>
+                            </div>
+                        </div>
+                        <p>"A galeria de fotos do SmartPainel é incrível! Consigo mostrar meu cardápio, ambiente do restaurante e pratos especiais, tudo com um design profissional que combina com minha marca."</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="feature-card">
+                        <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                            <img src="https://placehold.co/60x60/4361ee/ffffff?text=LS" style="width: 60px; height: 60px; border-radius: 50%; margin-right: 15px;" alt="User">
+                            <div>
+                                <h3 style="margin: 0;">Luciana Santos</h3>
+                                <p style="margin: 0;">Consultora de Imagem</p>
+                            </div>
+                        </div>
+                        <p>"Como profissional autônoma, o SmartPainel DirectLink me ajudou a organizar minha presença digital e transmitir mais credibilidade aos meus clientes com um visual padronizado e elegante."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section style="background-color: var(--accent-color); color: white; text-align: center; padding: 60px 0;">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Pronto para centralizar sua presença online?</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 1.5rem;">Em breve você poderá criar seu próprio SmartPainel DirectLink personalizado.</p>
+            <a href="#templates" class="btn btn-light">Ver Templates Disponíveis</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h3><span style="color: var(--primary-color);">SmartPainel</span> DirectLink</h3>
+                    <p>Reunindo todos os seus links em um só lugar com design padronizado e profissional. Inspirado no DirectMe, mas com recursos exclusivos para participantes do painel interativo.</p>
+                    <div style="margin-top: 20px;">
+                        <a href="#" style="color: white; margin-right: 15px;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white;"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <h4>Links Rápidos</h4>
+                            <ul style="list-style: none; padding: 0;">
+                                <li style="margin-bottom: 10px;"><a href="#recursos" style="color: white; text-decoration: none;">Recursos</a></li>
+                                <li style="margin-bottom: 10px;"><a href="#como-funciona" style="color: white; text-decoration: none;">Como Funciona</a></li>
+                                <li style="margin-bottom: 10px;"><a href="#galeria" style="color: white; text-decoration: none;">Galeria</a></li>
+                                <li style="margin-bottom: 10px;"><a href="#templates" style="color: white; text-decoration: none;">Templates</a></li>
+                                <li style="margin-bottom: 10px;"><a href="#depoimentos" style="color: white; text-decoration: none;">Depoimentos</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <h4>Contato</h4>
+                            <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> contato@smartpainel.com.br</p>
+                            <p><i class="fas fa-phone" style="margin-right: 10px;"></i> (11) 99999-9999</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <p style="margin: 0;">&copy; 2023 SmartPainel DirectLink. Todos os direitos reservados.</p>
+                <p style="margin: 0;">Feito com <i class="fas fa-heart" style="color: #f72585;"></i> no Brasil</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
