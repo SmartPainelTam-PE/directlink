@@ -6,7 +6,7 @@ const dadosPerfil = {
   localizacao: "https://www.google.com/maps/place/Rafaela+Gomes+-+Fisioterapia+e+Pilates/@-8.7560178,-35.1059813,17z/data=!3m1!4b1!4m6!3m5!1s0x700792c15f22f31:0x44258da4c451cbf4!8m2!3d-8.7560231!4d-35.1011104!16s%2Fg%2F11qhzdz7f7?entry=ttu&g_ep=EgoyMDI1MDUxNS4wIKXMDSoASAFQAw%3D%3D",
   whatsapp: "5581999836991",
   instagram: "@rafaelagomesfisio",
-  facebook: "/RafalaGomesFisioterapeuta",
+  facebook: "/rafaelagomesfisioterapeuta",
   website: "",
   ifood: "",
   anotaai: "",
