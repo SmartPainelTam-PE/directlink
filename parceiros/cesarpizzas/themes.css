@@ -319,4 +319,53 @@
     width: 20px;
     height: 20px;
   }
+}
+
+/* Estilos para a scrollbar - compatível com todos os temas */
+/* Estilo para o container e qualquer elemento com scrollbar */
+.container::-webkit-scrollbar, *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Estilo para o track (fundo) da scrollbar */
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin: 5px 0;
+}
+
+/* Estilo para o thumb (a parte que se move) da scrollbar */
+*::-webkit-scrollbar-thumb {
+  background: rgba(var(--primary-rgb), 0.6);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+/* Efeito hover no thumb da scrollbar */
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--primary-rgb), 0.8);
+}
+
+/* Estilo para o corner da scrollbar (onde se encontram horizontal e vertical) */
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Estilos específicos para Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--primary-rgb), 0.6) rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos específicos para dispositivos móveis - scrollbar mais fina */
+@media (max-width: 768px) {
+  .container::-webkit-scrollbar, *::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    margin: 3px 0;
+  }
 } 
