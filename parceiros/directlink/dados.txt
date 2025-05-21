@@ -1,0 +1,9 @@
+nome: DirectLink
+descricao: Soluções Digitais Personalizadas
+localizacao: https://www.google.com/maps?q=São+Paulo,+SP
+whatsapp: 5511999999999
+instagram: @directlink.oficial
+facebook: /directlinkoficial
+website: www.directlink.com.br
+contatos: 11999999999
+tema: turquoise 
