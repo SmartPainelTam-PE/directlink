@@ -7,32 +7,89 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="themes.css">
+  <link rel="icon" href="button.png" type="image/png">
   
-  <!-- Inclusão do arquivo de dados -->
-  <script src="dados.js"></script>
+  <!-- Meta tags para prévia de compartilhamento -->
+  <meta property="og:title" content="Rafaela Gomes - Direct Link">
+  <meta property="og:description" content="Links e informações de contato">
+  <meta property="og:image" content="smartpaineltam-pe.github.io/directlink/parceiros/cesarpizzas/button.png"> <!--use a url do repositorio do github!!!--> 
+  <meta property="og:url" content="">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter Card tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Rafaela Gomes - Direct Link">
+  <meta name="twitter:description" content="Links e informações de contato">
+  <meta name="twitter:image" content="smartpaineltam-pe.github.io/directlink/parceiros/cesarpizzas/button.png"> <!--use a url do repositorio do github!!!--> 
  
   <style>
-    html, body {
-      height: 100%;
+    /* Configurações globais */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Configuração para permitir scroll com o mouse fora do container */
+    html, body {
+      height: 100%;
       overflow: hidden;
     }
     
     body {
-      background: var(--background);
-      font-family: 'Poppins', sans-serif;
-      color: var(--text);
-      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      background-color: #000;
+      color: #fff;
+      padding: 20px;
+      min-height: 100vh;
       position: relative;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      box-sizing: border-box;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+    
+    /* Estilo inicial para evitar FOUC (Flash of Unstyled Content) */
+    .page-loading {
+      visibility: hidden;
+    }
+    
+    /* Estilos para o spinner de carregamento */
+    .loading-spinner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--background, #000000b6);
+      z-index: 9999;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .loading-spinner.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-left-color: var(--primary, #3e86f5);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
     
     /* Background com várias imagens button.png */
@@ -62,7 +119,7 @@
     }
     
     .bg-image {
-      background-image: url('button.png');
+      background-image: url('');
       background-size: cover;
       background-position: center;
       opacity: 0.2;
@@ -71,6 +128,22 @@
       transform: none;
       filter: blur(1px);
      
+    }
+    
+    /* Ajuste específico para telas maiores (PCs) */
+    @media (min-width: 769px) {
+      .bg-image-container {
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        gap: 10px;
+      }
+      
+      .bg-image {
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
     }
     
     .container {
@@ -89,6 +162,10 @@
       -webkit-backdrop-filter: blur(10px);
       overflow-y: auto;
       box-sizing: border-box;
+      /* Habilita o scroll-wheel em qualquer lugar da página para este elemento */
+      overscroll-behavior: contain;
+      scroll-behavior: smooth;
+ 
     }
     .profile-img {
       width: 280px;
@@ -131,10 +208,16 @@
     }
     .galeria {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 20px;
-      justify-content: center;
+      justify-content: flex-start;
       margin-bottom: 28px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      padding: 10px 0;
+      width: 100%;
     }
     .galeria a {
       display: block;
@@ -143,6 +226,8 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
       transition: transform 0.18s, box-shadow 0.18s;
       border: 1px solid rgba(255, 255, 255, 0.1);
+      flex: 0 0 auto;
+      scroll-snap-align: start;
     }
     .galeria a:hover {
       transform: scale(1.07);
@@ -535,14 +620,11 @@
         margin-bottom: 15px;
       }
       
-      .galeria {
-        gap: 10px;
-        margin-bottom: 20px;
-      }
-      
       .galeria img {
-        width: 80px;
-        height: 80px;
+        width: calc(25vw - 20px);
+        height: calc(25vw - 20px);
+        min-width: 80px;
+        min-height: 80px;
       }
       
       .links {
@@ -580,6 +662,12 @@
       .proximo {
         right: 10px;
       }
+      
+      .galeria-nav {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+      }
     }
     
     /* Media queries para dispositivos móveis menores */
@@ -603,11 +691,6 @@
       p {
         font-size: 1rem;
         margin-bottom: 12px;
-      }
-      
-      .galeria {
-        gap: 8px;
-        margin-bottom: 15px;
       }
       
       .galeria img {
@@ -748,22 +831,93 @@
         font-size: 1rem;
       }
     }
+    
+    /* Controles de navegação do carrossel */
+    .galeria-container {
+      position: relative;
+      width: 100%;
+      margin-bottom: 28px;
+    }
+    
+    .galeria-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30px;
+      height: 30px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      z-index: 5;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
+    
+    .galeria-nav:hover {
+      opacity: 1;
+    }
+    
+    .galeria-prev {
+      left: -5px;
+    }
+    
+    .galeria-next {
+      right: -5px;
+    }
+    
+    /* Indicadores de posição do carrossel */
+    .galeria-indicators {
+      display: none;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    
+    .galeria-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .galeria-indicator.active {
+      background-color: rgba(var(--primary-rgb), 0.8);
+      transform: scale(1.3);
+    }
   </style>
 </head>
-<body>
+<body class="page-loading">
+  <!-- Spinner de carregamento -->
+  <div id="loading-spinner" class="loading-spinner">
+    <div class="spinner"></div>
+  </div>
+  
   <!-- Elementos de background serão adicionados via JavaScript -->
   <div class="bg-image-container" id="bg-container">
     <!-- As imagens de fundo serão adicionadas via JavaScript -->
   </div>
   
   <div class="container">
-    <img id="profile-img" class="profile-img" src="button.png" alt="Perfil">
+    <img id="profile-img" class="profile-img" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Perfil">
     <div class="header-content">
       <h1 id="nome">Carregando...</h1>
       <p id="descricao"></p>
     </div>
-    <div class="galeria" id="galeria-container">
-      <!-- As imagens serão carregadas dinamicamente -->
+    <div class="galeria-container">
+      <button class="galeria-nav galeria-prev" id="galeria-prev">&lt;</button>
+      <div class="galeria" id="galeria-container">
+        <!-- As imagens serão carregadas dinamicamente -->
+      </div>
+      <button class="galeria-nav galeria-next" id="galeria-next">&gt;</button>
+      <div class="galeria-indicators" id="galeria-indicators"></div>
     </div>
     <div class="links" id="links-container">
       <!-- Os links serão carregados dinamicamente -->
@@ -797,11 +951,11 @@
     <div class="imagem-container">
       <img src="" alt="Imagem ampliada" class="imagem-ampliada" id="imagem-ampliada">
       <button class="fechar-imagem" id="fechar-imagem">&times;</button>
-    </div>
-    <button class="navegacao-imagem anterior" id="anterior">&lt;</button>
-    <button class="navegacao-imagem proximo" id="proximo">&gt;</button>
-    <div class="indicador-progresso" id="indicador-progresso">
-      <!-- Os pontos serão adicionados dinamicamente -->
+      <button class="navegacao-imagem anterior" id="anterior">&lt;</button>
+      <button class="navegacao-imagem proximo" id="proximo">&gt;</button>
+      <div class="indicador-progresso" id="indicador-progresso">
+        <!-- Os pontos serão adicionados dinamicamente -->
+      </div>
     </div>
   </div>
   
@@ -821,23 +975,35 @@
       <div class="login-error" id="login-error"></div>
     </div>
   </div>
+  <!-- Inclusão do arquivo de dados -->
+  <script src="dados.js"></script>
 
   <script>
     // Criar elementos de background com button.png
     function criarBackgroundImagens() {
       const container = document.getElementById('bg-container');
       const rows = 5;
-      const cols = 8;
+      const cols = window.innerWidth > 768 ? 8 : 5; // Usar 8 colunas em PCs e 5 em dispositivos móveis
       
-      // Limpar o container
-      container.innerHTML = '';
+      // Armazenar o último tamanho usado para evitar recriações desnecessárias
+      const lastSize = container.dataset.lastSize;
+      const currentSize = `${rows}x${cols}`;
       
-      for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-          const bgImage = document.createElement('div');
-          bgImage.className = 'bg-image';
-          container.appendChild(bgImage);
+      // Só recriar se o tamanho mudou
+      if (lastSize !== currentSize) {
+        // Limpar o container
+        container.innerHTML = '';
+        
+        for (let i = 0; i < rows; i++) {
+          for (let j = 0; j < cols; j++) {
+            const bgImage = document.createElement('div');
+            bgImage.className = 'bg-image';
+            container.appendChild(bgImage);
+          }
         }
+        
+        // Armazenar o tamanho atual
+        container.dataset.lastSize = currentSize;
       }
     }
 
@@ -845,6 +1011,16 @@
     function carregarDados() {
       console.log("Carregando dados do arquivo dados.js...");
       console.log("Dados carregados:", dadosPerfil);
+      
+      // Aplicar o tema imediatamente antes de qualquer renderização
+      if (dadosPerfil.tema) {
+        document.body.className = `theme-${dadosPerfil.tema} page-loading`;
+        console.log("Tema aplicado:", dadosPerfil.tema);
+      } else {
+        // Tema padrão caso não esteja definido
+        document.body.className = 'theme-blue page-loading';
+        console.log("Tema padrão aplicado: blue");
+      }
       
       // Atualizar o conteúdo da página diretamente com os dados do dados.js
       atualizarPagina(dadosPerfil, ordemChaves);
@@ -856,24 +1032,37 @@
       if (dados.nome) {
         document.getElementById('nome').textContent = dados.nome;
         document.title = dados.nome + ' - Direct Link';
+        
+        // Atualizar meta tags
+        document.querySelector('meta[property="og:title"]').setAttribute('content', dados.nome + ' - Direct Link');
+        document.querySelector('meta[name="twitter:title"]').setAttribute('content', dados.nome + ' - Direct Link');
       }
       
       if (dados.descricao) {
         document.getElementById('descricao').textContent = dados.descricao;
+        
+        // Atualizar meta tags de descrição
+        document.querySelector('meta[property="og:description"]').setAttribute('content', dados.descricao);
+        document.querySelector('meta[name="twitter:description"]').setAttribute('content', dados.descricao);
       } else {
         document.getElementById('descricao').style.display = 'none';
       }
 
-      // Verificar se existe um tema definido no arquivo dados.js
-      if (dados.tema) {
-        document.body.className = `theme-${dados.tema}`;
-        console.log("Tema aplicado:", dados.tema);
-      } else {
-        // Tema padrão caso não esteja definido
-        document.body.className = 'theme-blue';
-        console.log("Tema padrão aplicado: blue");
-      }
+      // Definir a imagem de perfil
+      document.getElementById('profile-img').src = 'button.png';
+      
+      // Atualizar URL atual nas meta tags
+      const urlAtual = window.location.href;
+      document.querySelector('meta[property="og:url"]').setAttribute('content', urlAtual);
+      
+      // Atualizar caminho completo da imagem nas meta tags
+      const urlBase = window.location.href.split('/').slice(0, -1).join('/');
+      const imagemUrl = urlBase + '/button.png';
+      document.querySelector('meta[property="og:image"]').setAttribute('content', imagemUrl);
+      document.querySelector('meta[name="twitter:image"]').setAttribute('content', imagemUrl);
 
+      // O tema já foi aplicado na função carregarDados
+      
       // Carregar imagens para a galeria
       carregarGaleria();
 
@@ -912,7 +1101,9 @@
     // Função para carregar imagens na galeria
     function carregarGaleria() {
       const galeriaContainer = document.getElementById('galeria-container');
+      const galeriaIndicators = document.getElementById('galeria-indicators');
       galeriaContainer.innerHTML = '';
+      galeriaIndicators.innerHTML = '';
       
       // Tentar carregar 6 imagens (img01.jpg até img06.jpg)
       const maxImagens = 6;
@@ -946,7 +1137,22 @@
             abrirImagemAmpliada(parseInt(this.dataset.index));
           });
           
+          // Adiciona indicador
+          const indicator = document.createElement('div');
+          indicator.className = 'galeria-indicator' + (imagensCarregadas === 0 ? ' active' : '');
+          indicator.dataset.index = imagensCarregadas;
+          indicator.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            scrollToImage(index);
+          });
+          galeriaIndicators.appendChild(indicator);
+          
           imagensCarregadas++;
+          
+          // Configura os controles de navegação após carregar a primeira imagem
+          if (imagensCarregadas === 1) {
+            configurarControlesCarrossel();
+          }
         };
         
         img.onerror = function() {
@@ -960,12 +1166,98 @@
       // Se nenhuma imagem for carregada, esconde a galeria
       setTimeout(() => {
         if (imagensCarregadas === 0) {
-          galeriaContainer.style.display = 'none';
+          document.querySelector('.galeria-container').style.display = 'none';
         } else {
           // Configura o visualizador de imagens
           configurarVisualizadorImagens(imagensSrc);
         }
       }, 1000);
+    }
+    
+    // Função para configurar os controles do carrossel
+    function configurarControlesCarrossel() {
+      const galeria = document.getElementById('galeria-container');
+      const prevBtn = document.getElementById('galeria-prev');
+      const nextBtn = document.getElementById('galeria-next');
+      
+      // Evento para o botão anterior
+      prevBtn.addEventListener('click', () => {
+        galeria.scrollBy({
+          left: -galeria.offsetWidth / 2,
+          behavior: 'smooth'
+        });
+        atualizarIndicadoresCarrossel();
+      });
+      
+      // Evento para o botão próximo
+      nextBtn.addEventListener('click', () => {
+        galeria.scrollBy({
+          left: galeria.offsetWidth / 2,
+          behavior: 'smooth'
+        });
+        atualizarIndicadoresCarrossel();
+      });
+      
+      // Atualizar indicadores quando o scroll parar
+      galeria.addEventListener('scroll', () => {
+        clearTimeout(galeria.scrollTimeout);
+        galeria.scrollTimeout = setTimeout(() => {
+          atualizarIndicadoresCarrossel();
+        }, 150);
+      });
+    }
+    
+    // Função para atualizar os indicadores do carrossel com base na posição de scroll
+    function atualizarIndicadoresCarrossel() {
+      const galeria = document.getElementById('galeria-container');
+      const indicators = document.querySelectorAll('.galeria-indicator');
+      if (indicators.length === 0) return;
+      
+      // Calcular qual imagem está mais visível
+      const scrollPosition = galeria.scrollLeft;
+      const containerWidth = galeria.offsetWidth;
+      const links = galeria.querySelectorAll('a');
+      
+      let activeIndex = 0;
+      let minDistance = Infinity;
+      
+      links.forEach((link, index) => {
+        const linkPosition = link.offsetLeft;
+        const distance = Math.abs(linkPosition - scrollPosition);
+        
+        if (distance < minDistance) {
+          minDistance = distance;
+          activeIndex = index;
+        }
+      });
+      
+      // Atualizar classe ativa nos indicadores
+      indicators.forEach((indicator, index) => {
+        if (index === activeIndex) {
+          indicator.classList.add('active');
+        } else {
+          indicator.classList.remove('active');
+        }
+      });
+    }
+    
+    // Função para rolar para uma imagem específica
+    function scrollToImage(index) {
+      const galeria = document.getElementById('galeria-container');
+      const links = galeria.querySelectorAll('a');
+      
+      if (links[index]) {
+        links[index].scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
+        
+        // Atualizar indicadores após o scroll
+        setTimeout(() => {
+          atualizarIndicadoresCarrossel();
+        }, 500);
+      }
     }
     
     // Variáveis para controle do visualizador de imagens
@@ -981,14 +1273,30 @@
     function configurarVisualizadorImagens(imagensSrc) {
       imagensGaleria = imagensSrc;
       
+      // Configurar controles do visualizador
+      configurarControlesVisualizador();
+    }
+    
+    // Função para configurar os controles do visualizador (botões de navegação e fechar)
+    function configurarControlesVisualizador() {
       const overlay = document.getElementById('imagem-overlay');
       const fecharBtn = document.getElementById('fechar-imagem');
       const anteriorBtn = document.getElementById('anterior');
       const proximoBtn = document.getElementById('proximo');
       const imagemAmpliada = document.getElementById('imagem-ampliada');
       
+      // Remover event listeners anteriores para evitar duplicação
+      fecharBtn.replaceWith(fecharBtn.cloneNode(true));
+      anteriorBtn.replaceWith(anteriorBtn.cloneNode(true));
+      proximoBtn.replaceWith(proximoBtn.cloneNode(true));
+      
+      // Atualizar referências após clonar os elementos
+      const novoFecharBtn = document.getElementById('fechar-imagem');
+      const novoAnteriorBtn = document.getElementById('anterior');
+      const novoProximoBtn = document.getElementById('proximo');
+      
       // Fechar o overlay ao clicar no botão fechar
-      fecharBtn.addEventListener('click', () => {
+      novoFecharBtn.addEventListener('click', () => {
         overlay.classList.remove('ativo');
       });
       
@@ -1000,11 +1308,11 @@
       });
       
       // Navegação entre imagens
-      anteriorBtn.addEventListener('click', () => {
+      novoAnteriorBtn.addEventListener('click', () => {
         mostrarImagemAnterior();
       });
       
-      proximoBtn.addEventListener('click', () => {
+      novoProximoBtn.addEventListener('click', () => {
         mostrarProximaImagem();
       });
       
@@ -1187,8 +1495,19 @@
       const overlay = document.getElementById('imagem-overlay');
       const imagemAmpliada = document.getElementById('imagem-ampliada');
       
+      // Adicionar animação de entrada pela direita
+      imagemAmpliada.classList.add('slide-in-right');
+      
       imagemAmpliada.src = imagensGaleria[indice];
       overlay.classList.add('ativo');
+      
+      // Configurar os controles do visualizador
+      configurarControlesVisualizador();
+      
+      // Remover classe após a animação terminar
+      setTimeout(() => {
+        imagemAmpliada.classList.remove('slide-in-right');
+      }, 300);
       
       // Atualizar o indicador de progresso
       atualizarIndicadorProgresso();
@@ -1220,7 +1539,7 @@
       const link = document.createElement('a');
       link.href = url;
       
-      // Não abrir em nova aba se for o cardápio
+      // Não abrir em nova aba se for o cardápio ou outro link JavaScript
       if (!url.includes('javascript:')) {
         link.target = '_blank';
       }
@@ -1239,14 +1558,85 @@
 
     // Inicialização
     document.addEventListener('DOMContentLoaded', () => {
-      criarBackgroundImagens();
-      carregarDados();
-      ajustarLayoutMobile();
-      inicializarSeletorTemas();
-      
-      // Ajustar layout quando a orientação do dispositivo mudar
-      window.addEventListener('resize', ajustarLayoutMobile);
+      // Pré-carregar a imagem de perfil e button.png antes de mostrar a página
+      preCarregarRecursos(() => {
+        criarBackgroundImagens();
+        carregarDados();
+        ajustarLayoutMobile();
+        inicializarSeletorTemas();
+        
+        // Mostrar a página e esconder o spinner
+        mostrarPagina();
+        
+        // Ajustar layout quando a orientação do dispositivo mudar
+        window.addEventListener('resize', () => {
+          ajustarLayoutMobile();
+          criarBackgroundImagens(); // Recriar imagens de fundo ao redimensionar
+        });
+      });
     });
+    
+    // Função para pré-carregar recursos essenciais
+    function preCarregarRecursos(callback) {
+      let recursosCarregados = 0;
+      const totalRecursos = 2; // Imagem de perfil e button.png
+      let dadosCarregados = false;
+      
+      // Função para verificar se todos os recursos foram carregados
+      function verificarCarregamento() {
+        recursosCarregados++;
+        verificarTodosCarregados();
+      }
+      
+      // Função para verificar se o script de dados foi carregado
+      function verificarDadosCarregados() {
+        if (typeof dadosPerfil !== 'undefined' && typeof ordemChaves !== 'undefined') {
+          dadosCarregados = true;
+          verificarTodosCarregados();
+        } else {
+          // Tentar novamente em 100ms
+          setTimeout(verificarDadosCarregados, 100);
+        }
+      }
+      
+      // Verificar se tudo está carregado
+      function verificarTodosCarregados() {
+        if (recursosCarregados >= totalRecursos && dadosCarregados) {
+          callback();
+        }
+      }
+      
+      // Pré-carregar a imagem de perfil
+      const imgPerfil = new Image();
+      imgPerfil.onload = verificarCarregamento;
+      imgPerfil.onerror = verificarCarregamento; // Continuar mesmo se houver erro
+      imgPerfil.src = 'button.png';
+      
+      // Pré-carregar a imagem de fundo
+      const imgFundo = new Image();
+      imgFundo.onload = verificarCarregamento;
+      imgFundo.onerror = verificarCarregamento; // Continuar mesmo se houver erro
+      imgFundo.src = 'button.png';
+      
+      // Verificar se os dados já foram carregados
+      verificarDadosCarregados();
+    }
+    
+    // Função para mostrar a página quando estiver pronta
+    function mostrarPagina() {
+      // Remover o spinner
+      const spinner = document.getElementById('loading-spinner');
+      spinner.style.opacity = '0';
+      
+      setTimeout(() => {
+        // Esconder completamente o spinner após a transição
+        spinner.style.display = 'none';
+        
+        // Mostrar o conteúdo da página
+        document.body.classList.add('page-loaded');
+        document.body.classList.remove('page-loading');
+      }, 300);
+    }
     
     // Função para ajustar o layout em dispositivos móveis
     function ajustarLayoutMobile() {
@@ -1440,6 +1830,8 @@
       } else {
         // Se já temos imagens carregadas, mostrar a primeira
         mostrarCardapio(0);
+        // Garantir que os controles estejam configurados
+        configurarControlesVisualizador();
       }
     }
     
@@ -1469,6 +1861,8 @@
           // Se for a primeira imagem encontrada, mostrar imediatamente
           if (imagensEncontradas.length === 1) {
             mostrarCardapio(0);
+            // Configurar os controles do visualizador
+            configurarControlesVisualizador();
           }
           
           imagensVerificadas++;
@@ -1506,8 +1900,19 @@
       const overlay = document.getElementById('imagem-overlay');
       const imagemAmpliada = document.getElementById('imagem-ampliada');
       
+      // Adicionar animação de entrada pela direita
+      imagemAmpliada.classList.add('slide-in-right');
+      
       imagemAmpliada.src = imagensCardapio[indice];
       overlay.classList.add('ativo');
+      
+      // Configurar os controles do visualizador
+      configurarControlesVisualizador();
+      
+      // Remover classe após a animação terminar
+      setTimeout(() => {
+        imagemAmpliada.classList.remove('slide-in-right');
+      }, 300);
       
       // Atualizar o indicador de progresso para o cardápio
       atualizarIndicadorProgressoCardapio();
@@ -1533,6 +1938,24 @@
         indicadorContainer.appendChild(ponto);
       }
     }
+
+    // Script para permitir scroll do container com a roda do mouse em qualquer lugar da página
+    document.addEventListener('DOMContentLoaded', function() {
+      const container = document.querySelector('.container');
+      if (!container) return;
+      
+      // Evento de roda do mouse para a página inteira
+      document.addEventListener('wheel', function(e) {
+        // Se o container estiver visível na tela
+        const rect = container.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          // Rola o container na direção do scroll da roda do mouse
+          container.scrollTop += e.deltaY;
+          // Previne o scroll padrão da página
+          e.preventDefault();
+        }
+      }, { passive: false });
+    });
   </script>
 </body>
 </html>
