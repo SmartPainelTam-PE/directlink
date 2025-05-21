@@ -1105,11 +1105,17 @@
       galeriaContainer.innerHTML = '';
       galeriaIndicators.innerHTML = '';
       
-      // Tentar carregar 6 imagens (img01.jpg até img06.jpg)
+      // Tentar carregar imagens (img01.jpg até img10.jpg)
       const maxImagens = 10;
       let imagensCarregadas = 0;
       const imagensSrc = [];
       const imagensParaCarregar = [];
+      
+      // Array para controlar quais imagens já foram verificadas
+      const imagensVerificadas = new Set();
+      
+      // Flag para controlar se a função adicionarImagensEmOrdem já foi chamada
+      let imagensAdicionadas = false;
       
       // Primeiro, verificamos quais imagens existem
       for (let i = 1; i <= maxImagens; i++) {
@@ -1120,16 +1126,20 @@
         const img = new Image();
         
         img.onload = function() {
-          // A imagem existe, adiciona ao array de imagens para carregar
-          imagensParaCarregar.push({
-            src: imgSrc,
-            index: i - 1 // Índice baseado em zero
-          });
+          // A imagem existe, adiciona ao array de imagens para carregar se ainda não foi adicionada
+          if (!imagensVerificadas.has(imgSrc)) {
+            imagensVerificadas.add(imgSrc);
+            imagensParaCarregar.push({
+              src: imgSrc,
+              index: i - 1 // Índice baseado em zero
+            });
+          }
           
           imagensCarregadas++;
           
           // Quando todas as imagens forem verificadas, adiciona à galeria em ordem
-          if (imagensCarregadas === maxImagens || imagensCarregadas === 6) {
+          if (imagensCarregadas === maxImagens && !imagensAdicionadas) {
+            imagensAdicionadas = true;
             adicionarImagensEmOrdem();
           }
         };
@@ -1139,7 +1149,8 @@
           imagensCarregadas++;
           
           // Quando todas as imagens forem verificadas, adiciona à galeria em ordem
-          if (imagensCarregadas === maxImagens || imagensCarregadas === 6) {
+          if (imagensCarregadas === maxImagens && !imagensAdicionadas) {
+            imagensAdicionadas = true;
             adicionarImagensEmOrdem();
           }
         };
@@ -1147,10 +1158,22 @@
         img.src = imgSrc;
       }
       
+      // Timeout de segurança para garantir que as imagens sejam adicionadas mesmo se houver problemas
+      setTimeout(() => {
+        if (!imagensAdicionadas && imagensParaCarregar.length > 0) {
+          imagensAdicionadas = true;
+          adicionarImagensEmOrdem();
+        } else if (!imagensAdicionadas) {
+          document.querySelector('.galeria-container').style.display = 'none';
+        }
+      }, 3000);
+      
       // Função para adicionar as imagens à galeria em ordem
       function adicionarImagensEmOrdem() {
         // Ordenar as imagens pelo índice
         imagensParaCarregar.sort((a, b) => a.index - b.index);
+        
+        console.log("Imagens para carregar:", imagensParaCarregar.length);
         
         // Adicionar cada imagem à galeria na ordem correta
         imagensParaCarregar.forEach((imagem, idx) => {
@@ -1193,13 +1216,6 @@
           document.querySelector('.galeria-container').style.display = 'none';
         }
       }
-      
-      // Timeout de segurança caso alguma imagem não carregue
-      setTimeout(() => {
-        if (imagensParaCarregar.length === 0) {
-          document.querySelector('.galeria-container').style.display = 'none';
-        }
-      }, 3000);
     }
     
     // Função para configurar os controles do carrossel
@@ -1299,7 +1315,10 @@
     
     // Configura o visualizador de imagens
     function configurarVisualizadorImagens(imagensSrc) {
-      imagensGaleria = imagensSrc;
+      // Remover possíveis duplicações
+      imagensGaleria = [...new Set(imagensSrc)];
+      
+      console.log("Total de imagens no visualizador:", imagensGaleria.length);
       
       // Configurar controles do visualizador
       configurarControlesVisualizador();
@@ -1911,19 +1930,25 @@
       const imagensEncontradas = [];
       let imagensVerificadas = 0;
       
+      // Set para controlar quais imagens já foram adicionadas
+      const imagensAdicionadas = new Set();
+      
       // Verificar cada imagem possível
       imagensPossiveis.forEach((imgSrc, index) => {
         const img = new Image();
         
         img.onload = function() {
-          // A imagem existe, adiciona ao array
-          imagensEncontradas.push(imgSrc);
-          
-          // Se for a primeira imagem encontrada, mostrar imediatamente
-          if (imagensEncontradas.length === 1) {
-            mostrarCardapio(0);
-            // Configurar os controles do visualizador
-            configurarControlesVisualizador();
+          // A imagem existe, adiciona ao array se ainda não foi adicionada
+          if (!imagensAdicionadas.has(imgSrc)) {
+            imagensAdicionadas.add(imgSrc);
+            imagensEncontradas.push(imgSrc);
+            
+            // Se for a primeira imagem encontrada, mostrar imediatamente
+            if (imagensEncontradas.length === 1) {
+              mostrarCardapio(0);
+              // Configurar os controles do visualizador
+              configurarControlesVisualizador();
+            }
           }
           
           imagensVerificadas++;
@@ -1943,7 +1968,9 @@
       function verificarTodasProcessadas() {
         if (imagensVerificadas === imagensPossiveis.length) {
           // Todas as imagens foram verificadas
-          imagensCardapio = imagensEncontradas;
+          imagensCardapio = [...imagensEncontradas]; // Criar uma cópia para evitar referências
+          
+          console.log("Total de imagens no cardápio:", imagensCardapio.length);
           
           if (imagensCardapio.length === 0) {
             alert('Nenhuma imagem de cardápio encontrada.');
