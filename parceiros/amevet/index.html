@@ -12,7 +12,7 @@
   <!-- Meta tags para prévia de compartilhamento -->
   <meta property="og:title" content="Rafaela Gomes - Direct Link">
   <meta property="og:description" content="Links e informações de contato">
-  <meta property="og:image" content="smartpaineltam-pe.github.io/directlink/parceiros/amevet/button.png"> <!--use a url do repositorio do github!!!--> 
+  <meta property="og:image" content="smartpaineltam-pe.github.io/parceiros/amevet/button.png"> <!--use a url do repositorio do github!!!--> 
   <meta property="og:url" content="">
   <meta property="og:type" content="website">
   
@@ -20,7 +20,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Rafaela Gomes - Direct Link">
   <meta name="twitter:description" content="Links e informações de contato">
-  <meta name="twitter:image" content="smartpaineltam-pe.github.io/directlink/parceiros/amevet/button.png"> <!--use a url do repositorio do github!!!--> 
+  <meta name="twitter:image" content="smartpaineltam-pe.github.io/parceiros/amevet/button.png"> <!--use a url do repositorio do github!!!--> 
  
   <style>
     /* Configurações globais */
@@ -301,6 +301,8 @@
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      padding: 20px;
+      box-sizing: border-box;
     }
     
     .imagem-overlay.ativo {
@@ -310,11 +312,16 @@
     
     .imagem-container {
       position: relative;
-      max-width: 90%;
-      max-height: 90%;
+      max-width: 85%;
+      max-height: 85%;
       transform: scale(0.9);
       transition: transform 0.3s ease;
-      margin: 0 60px; /* Espaço para os botões de navegação */
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      box-sizing: border-box;
     }
     
     .imagem-overlay.ativo .imagem-container {
@@ -323,11 +330,69 @@
     
     .imagem-ampliada {
       max-width: 100%;
-      max-height: 100%;
+      max-height: 75vh; /* Limita a altura a 75% da altura da viewport */
       border-radius: 8px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       border: 1px solid rgba(255, 255, 255, 0.1);
       object-fit: contain;
+      display: block;
+    }
+    
+    /* Ajuste específico para telas maiores (PCs) */
+    @media (min-width: 1200px) {
+      .imagem-container {
+        max-width: 75%;
+        max-height: 85%;
+      }
+      
+      .imagem-ampliada {
+        max-height: 80vh; /* Aumenta um pouco em telas grandes */
+      }
+      
+      .anterior {
+        left: 50px;
+      }
+      
+      .proximo {
+        right: 50px;
+      }
+      
+      .navegacao-imagem {
+        width: 70px;
+        height: 70px;
+        font-size: 35px;
+      }
+    }
+    
+    /* Ajuste para telas muito grandes */
+    @media (min-width: 1600px) {
+      .imagem-container {
+        max-width: 65%;
+        max-height: 90%;
+      }
+      
+      .imagem-ampliada {
+        max-height: 85vh;
+      }
+      
+      .anterior {
+        left: 80px;
+      }
+      
+      .proximo {
+        right: 80px;
+      }
+    }
+    
+    /* Ajuste para telas em formato ultrawide */
+    @media (min-width: 1600px) and (min-aspect-ratio: 16/9) {
+      .imagem-container {
+        max-width: 60%;
+      }
+      
+      .imagem-ampliada {
+        max-height: 80vh;
+      }
     }
     
     .transicao-imagem {
@@ -365,9 +430,9 @@
       position: fixed;
       top: 50%;
       transform: translateY(-50%);
-      width: 50px;
-      height: 50px;
-      background: rgba(35, 36, 37, 0.5);
+      width: 60px;
+      height: 60px;
+      background: rgba(35, 36, 37, 0.7);
       color: white;
       border: none;
       border-radius: 50%;
@@ -375,22 +440,27 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 24px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      transition: all 0.2s ease;
+      font-size: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
       z-index: 1010;
+      margin: 0 20px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
     .navegacao-imagem:hover {
-      background: rgba(var(--primary-rgb, 62, 134, 245), 0.8);
+      background: rgba(var(--primary-rgb, 62, 134, 245), 0.9);
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
     }
     
     .anterior {
-      left: 20px;
+      left: 30px;
     }
     
     .proximo {
-      right: 20px;
+      right: 30px;
     }
     
     .indicador-progresso {
@@ -650,17 +720,17 @@
       }
       
       .navegacao-imagem {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
       }
       
       .anterior {
-        left: 10px;
+        left: 15px;
       }
       
       .proximo {
-        right: 10px;
+        right: 15px;
       }
       
       .galeria-nav {
@@ -712,9 +782,22 @@
       }
       
       .navegacao-imagem {
-        width: 35px;
-        height: 35px;
-        font-size: 18px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+      
+      .anterior {
+        left: 10px;
+      }
+      
+      .proximo {
+        right: 10px;
+      }
+      
+      .imagem-container {
+        max-width: 85%;
+        max-height: 85%;
       }
     }
     
@@ -948,14 +1031,14 @@
   
   <!-- Overlay para exibir imagens ampliadas -->
   <div class="imagem-overlay" id="imagem-overlay">
+    <button class="navegacao-imagem anterior" id="anterior">&lt;</button>
     <div class="imagem-container">
       <img src="" alt="Imagem ampliada" class="imagem-ampliada" id="imagem-ampliada">
       <button class="fechar-imagem" id="fechar-imagem">&times;</button>
-      <button class="navegacao-imagem anterior" id="anterior">&lt;</button>
-      <button class="navegacao-imagem proximo" id="proximo">&gt;</button>
-      <div class="indicador-progresso" id="indicador-progresso">
-        <!-- Os pontos serão adicionados dinamicamente -->
-      </div>
+    </div>
+    <button class="navegacao-imagem proximo" id="proximo">&gt;</button>
+    <div class="indicador-progresso" id="indicador-progresso">
+      <!-- Os pontos serão adicionados dinamicamente -->
     </div>
   </div>
   
