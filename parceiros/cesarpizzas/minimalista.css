@@ -1,0 +1,462 @@
+/* Estilo minimalista com efeito glass - inspirado no YouTube Shorts */
+
+/* Reset e base */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #000;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Botões de navegação lateral estilo Shorts */
+.nav-buttons {
+    position: fixed;
+    right: 20px;
+    bottom: 30%;
+    transform: translateY(50%);
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    z-index: 4000;
+    width: auto;
+}
+
+.nav-button {
+    width: 80px;
+    height: 80px;
+    /* background: linear-gradient(135deg, rgba(25, 35, 60, 0.137), rgba(20, 30, 48, 0.151)); */
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    /* backdrop-filter: blur(5px); */
+    /* -webkit-backdrop-filter: blur(5px); */
+    /* border: 1px solid rgba(255, 255, 255, 0.116); */
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); */
+    transition: all 0.3s ease;
+    overflow: visible;
+    position: relative;
+}
+
+.nav-button i {
+    font-size: 40px;
+    margin-bottom: 3px;
+    transition: transform 0.2s ease;
+    text-shadow: 
+        -1.5px -1.5px 0 rgba(0,0,0,1),  
+        1.5px -1.5px 0 rgba(0,0,0,1),
+        -1.5px 1.5px 0 rgba(0,0,0,1),
+        1.5px 1.5px 0 rgba(0,0,0,1),
+        0 -2.5px 0 rgba(0,0,0,1),
+        0 2.5px 0 rgba(0,0,0,1),
+        -2.5px 0 0 rgba(0,0,0,1),
+        2.5px 0 0 rgba(0,0,0,1);
+}
+
+.nav-button span {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: transparent;
+    color: white;
+    padding: 5px 0;
+    font-size: 14px;
+    opacity: 1;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    pointer-events: none;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    text-shadow: 
+        -1.5px -1.5px 0 rgba(0,0,0,1),  
+        1.5px -1.5px 0 rgba(0,0,0,1),
+        -1.5px 1.5px 0 rgba(0,0,0,1),
+        1.5px 1.5px 0 rgba(0,0,0,1),
+        0 -2.5px 0 rgba(0,0,0,1),
+        0 2.5px 0 rgba(0,0,0,1),
+        -2.5px 0 0 rgba(0,0,0,1),
+        2.5px 0 0 rgba(0,0,0,1);
+    font-weight: 200;
+    letter-spacing: 2px;
+}
+
+.nav-button:hover {
+    background-color: rgba(40, 50, 80, 0.219);
+    transform: scale(1.1);
+}
+
+.nav-button:hover i {
+    transform: scale(1.2);
+}
+
+.nav-button:hover span {
+    transform: translateX(-50%) scale(1.1);
+}
+
+
+/* Animações para os botões de navegação */
+.nav-button.animate {
+    animation: slideInRight 0.5s ease forwards;
+}
+
+.nav-button.animate-out {
+    animation: slideOutRight 0.3s ease forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+}
+
+/* Estilo glassmorphism para os menus overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.menu-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.menu-container {
+    width: 85%;
+    max-width: 1200px;
+    max-height: 85vh;
+    background: linear-gradient(135deg, rgba(25, 35, 60, 0.219), rgba(20, 30, 48, 0.171));
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.menu-overlay.visible .menu-container {
+    transform: scale(1);
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(to right, rgba(30, 40, 70, 0.123), rgba(40, 50, 80, 0.219));
+    min-height: 65px;
+}
+
+.menu-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+    line-height: 1.2;
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu-title small {
+    font-size: 70%;
+    opacity: 0.8;
+    display: block;
+    margin-top: 5px;
+    font-weight: 400;
+    max-height: 3em;
+    overflow: hidden;
+}
+
+.close-menu {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-menu:hover {
+    background: rgba(255, 100, 100, 0.3);
+    transform: rotate(90deg);
+}
+
+/* Estilo para a scrollbar do menu */
+.menu-content::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.menu-content::-webkit-scrollbar-track {
+    background: rgba(20, 30, 50, 0.1);
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.menu-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, rgba(62, 166, 255, 0.3), rgba(40, 80, 170, 0.5));
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: all 0.3s ease;
+}
+
+.menu-content::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, rgba(62, 166, 255, 0.6), rgba(40, 80, 170, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.menu-content::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* Certifica-se que a área de conteúdo tenha scrolling suave */
+.menu-content {
+    padding: 20px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px 20px;
+    row-gap: 20px;
+    column-gap: 20px;
+    max-height: calc(85vh - 100px);
+    scrollbar-width: thin; /* Para Firefox */
+    scrollbar-color: rgba(62, 166, 255, 0.5) rgba(20, 30, 50, 0.1); /* Para Firefox */
+    scroll-behavior: smooth;
+}
+
+/* Botões dentro do menu */
+.menu-button {
+    background: rgba(40, 50, 80, 0.219);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1/1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    min-height: 140px;
+    height: auto;
+}
+
+.menu-button:hover {
+    background: rgba(60, 70, 100, 0.7);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.menu-button.selected {
+    background: linear-gradient(135deg, rgba(62, 166, 255, 0.4), rgba(62, 166, 255, 0.2));
+    border: 1px solid rgba(62, 166, 255, 0.5);
+    box-shadow: 0 0 15px rgba(62, 166, 255, 0.4);
+}
+
+.menu-button-image-container {
+    width: 70%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    
+}
+
+.menu-button-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.menu-button-image-container i {
+    font-size: 36px;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.menu-button-title {
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    font-weight: 500;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-top: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Estilo para o contador de vídeos */
+.video-counter {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(20, 20, 20, 0.6);
+    color: white;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.video-counter:hover {
+    background: rgba(30, 30, 30, 0.8);
+}
+
+/* Estilo para o controle de som */
+.sound-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(20, 20, 20, 0.6);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.sound-control:hover {
+    background: rgba(30, 30, 30, 0.8);
+    transform: scale(1.1);
+}
+
+/* Barra de progresso */
+.progress-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: rgba(50, 50, 50, 0.3);
+    z-index: 90;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, rgba(62, 166, 255, 0.8), rgba(62, 166, 255, 0.6));
+    box-shadow: 0 0 10px rgba(62, 166, 255, 0.5);
+}
+
+/* Estilo para mensagens na tela */
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .nav-buttons {
+        right: 10px;
+    }
+    
+    .nav-button {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .nav-button i {
+        font-size: 16px;
+    }
+    
+    .menu-content {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+/* Animações para transição de menu */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.9); }
+    to { transform: scale(1); }
+}
+
+/* Estilos para o popup de informações */
+.info-popup {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.info-popup-container {
+    background: linear-gradient(135deg, rgba(25, 35, 60, 0.8), rgba(20, 30, 48, 0.9));
+    border: 1px solid rgba(62, 166, 255, 0.2);
+}
+
+.keyboard-shortcut {
+    background: rgba(62, 166, 255, 0.15);
+    border: 1px solid rgba(62, 166, 255, 0.3);
+}
