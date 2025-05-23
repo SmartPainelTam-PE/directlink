@@ -281,7 +281,7 @@
     height: auto;
     max-height: 95vh;
     padding: 18px 8px;
-    margin: 18px auto;
+    margin: 32px auto 18px auto;
     box-sizing: border-box;
     overflow-y: auto;
   }
