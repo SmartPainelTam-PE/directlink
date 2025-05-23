@@ -276,6 +276,17 @@
 
 /* Media queries para o seletor de temas */
 @media (max-width: 768px) {
+  .container {
+    width: 96vw;
+    max-width: 600px;
+    height: auto;
+    max-height: 95vh;
+    padding: 18px 8px;
+    margin: 18px auto;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+}
   .theme-selector {
     bottom: 15px;
     right: 15px;
