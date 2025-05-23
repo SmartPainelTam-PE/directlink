@@ -8,7 +8,7 @@ const dadosPerfil = {
     instagram: "@carneiroscv",
     facebook: "/graficacarneiros",
     website: "graficacarneiros.com.br",
-    ifood: "ifood",
+    ifood: "www.ifood.com",
     anotaai: "",
     contatos: "81988297601",
     tema: "pink"
